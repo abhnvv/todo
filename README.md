@@ -103,8 +103,7 @@ GET /deleteTask/{taskId}
 ## Database
 
 ### User
-
-![Image Alt Text](images/example.png)
+<img src="https://github.com/abhnvv/todo/blob/main/User%20todo%20app%20Model%20.png" alt="User Table Model" width="250" height="200">
 
 * User entity stores the user credentials such as username, password.
 * We generate a new UUID and assign it to every new user.
@@ -113,6 +112,5 @@ GET /deleteTask/{taskId}
 
 ### Task
 
-
-![Image Alt Text](images/example.png)
+<img src="https://github.com/abhnvv/todo/blob/main/task%20table%20model.png" alt="User Table Model" width="250" height="250">
 
