@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+require_once("Constants.php");
 
 use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +32,7 @@ class UnArchiveTaskService
         {
             $task->setIsArchived(false);
             $this->entityManager->flush();
-            return new RedirectResponse($this->urlGenerator->generate('app_to_do'));
+            return new RedirectResponse($this->urlGenerator->generate(to_do));
         }
         else throw new AuthenticationException('Cannot unarchive other user task!');       
     }
