@@ -1,6 +1,9 @@
 <?php
 namespace App\Service;
 
+require_once 'Constants.php';
+
+
 use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +34,7 @@ class AddTaskService
     {
         if ($request->isMethod('POST')) {
             
-            $sessionId = $request->cookies->get('X-Session-ID');
+            $sessionId = $request->cookies->get(SESSION_ID);
             $userId = SessionData::getSessionData($this->redis, $sessionId);
             
             if ($userId) {
@@ -48,9 +51,9 @@ class AddTaskService
                 $this->entityManager->persist($task);
                 $this->entityManager->flush();
 
-                return new RedirectResponse($this->urlGenerator->generate('app_to_do'));
+                return new RedirectResponse($this->urlGenerator->generate(to_do));
             } else {
-                return new RedirectResponse($this->urlGenerator->generate('app_to_do_login'));
+                return new RedirectResponse($this->urlGenerator->generate(login));
             }
         }
 
