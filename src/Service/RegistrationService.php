@@ -1,6 +1,8 @@
 <?php
 namespace App\Service;
 
+require_once('Constants.php');
+
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +36,7 @@ class RegistrationService
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            return new RedirectResponse($this->urlGenerator->generate('app_to_do_login'));
+            return new RedirectResponse($this->urlGenerator->generate(login));
         }
 
         return new Response($this->twig->render('user/register.html.twig'));
