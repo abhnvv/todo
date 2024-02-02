@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+require_once('Constants.php');
+
 use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\DeleteTaskService;
@@ -33,7 +35,7 @@ class ArchiveTaskService
         {
             $task->setIsArchived(true);
             $this->entityManager->flush();
-            return new RedirectResponse($this->urlGenerator->generate('app_to_do'));
+            return new RedirectResponse($this->urlGenerator->generate(to_do));
         }
         else throw new AuthenticationException('Cannot archive other user task!');
     }
