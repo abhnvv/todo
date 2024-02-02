@@ -17,6 +17,7 @@ use App\Service\AddTaskService;
 use App\Service\GetTaskService;
 use App\Service\DeleteTaskService;
 use App\Service\ArchiveTaskService;
+use App\Service\UnArchiveTaskService;
 use App\Utils\SessionData;
 
 class ToDoController extends AbstractController
@@ -28,6 +29,7 @@ class ToDoController extends AbstractController
     private GetTaskService $getTaskService;
     private DeleteTaskService $deleteTaskService;
     private ArchiveTaskService $archiveTaskService;
+    private UnArchiveTaskService $unArchiveTaskService;
     private $logger;
     private $redis;
 
@@ -39,6 +41,7 @@ class ToDoController extends AbstractController
         GetTaskService $getTaskService,
         DeleteTaskService $deleteTaskService,
         ArchiveTaskService $archiveTaskService,
+        UnArchiveTaskService $unArchiveTaskService,
         RedisClient $redisClient,
         LoggerInterface $logger
     ) {
@@ -51,6 +54,7 @@ class ToDoController extends AbstractController
         $this->getTaskService = $getTaskService;
         $this->deleteTaskService = $deleteTaskService;
         $this->archiveTaskService = $archiveTaskService;
+        $this->unArchiveTaskService = $unArchiveTaskService;
     }
 
     #[Route('/', name: health_check, methods: ['GET'])]
@@ -176,6 +180,23 @@ class ToDoController extends AbstractController
 
         if ($sessionUserId) {
             return $this->archiveTaskService->archiveTask($sessionUserId, $taskId);
+        } else {
+            return $this->redirectToRoute(login);
+        }
+    }
+
+    #[Route('/task/unArchive/{taskId}', name: unarchive_task, methods: ['POST'])]
+    public function unArchive(Request $request, string $taskId): Response
+    {
+        $sessionId = $request->cookies->get(SESSION_ID);
+        if (!$sessionId) {
+            return $this->redirectToRoute(login);
+        }
+
+        $sessionUserId = SessionData::getSessionData($this->redis, $sessionId);
+
+        if ($sessionUserId) {
+            return $this->unArchiveTaskService->unArchiveTask($sessionUserId, $taskId);
         } else {
             return $this->redirectToRoute(login);
         }
