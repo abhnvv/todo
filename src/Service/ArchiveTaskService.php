@@ -24,12 +24,6 @@ class ArchiveTaskService
 
     public function archiveTask(string $userId, string $taskId): Response
     {
-        // $taskRepository = $this->entityManager->getRepository(Task::class);
-        // $task = $this->entityManager->getRepository(Task::class)->find($taskId);
-
-        // $task->setIsArchived(true);
-        // $this->entityManager->flush();
-
         $taskRepository = $this->entityManager->getRepository(Task::class);
         $task = $taskRepository->find($taskId);
         if (!$task) {
@@ -41,6 +35,6 @@ class ArchiveTaskService
             $this->entityManager->flush();
             return new RedirectResponse($this->urlGenerator->generate('app_to_do'));
         }
-        else throw new AuthenticationException('Cannot delete other user task!');       
+        else throw new AuthenticationException('Cannot archive other user task!');
     }
 }
