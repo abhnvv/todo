@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+</head>
+<body>
+    <form action="{{ path('app_to_do_add_task') }}" method="post">
+        {# <label for="userId">User Id:</label>
+        <input type="text" id="userId" name="userId">
+        <br> #}
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+        <br>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate">
+        <br>
+        <label for="isArchived">Is Archived:</label>
+        <select id="isArchived" name="isArchived">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+        <br>
+        <button type="submit">Add Task</button>
+    </form>
+</body>
+</html>

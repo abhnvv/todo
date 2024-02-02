@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000" # Adjust port as needed
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306" # Adjust port as needed
+    environment:
+      MYSQL_ROOT_PASSWORD: Pandey@123
+      MYSQL_DATABASE: todo
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Pandey@123

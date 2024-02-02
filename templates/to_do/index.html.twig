@@ -1,0 +1,86 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Hello ToDoController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/Users/abhinavpandey/Documents/development/ToDoApp/src/Controller/ToDoController.php'|file_link(0) }}">src/Controller/ToDoController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/Users/abhinavpandey/Documents/development/ToDoApp/templates/to_do/index.html.twig'|file_link(0) }}">templates/to_do/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
+ #}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+	</head>
+	<body>
+		<h2>
+			{{archived ? "Archive" : ""}}
+			Tasks:</h2>
+		<ul>
+			{% for eachTask in task %}
+				<li>
+					<strong>Title:</strong>
+					{{ eachTask.title }}
+					<br>
+					<strong>Description:</strong>
+					{{ eachTask.description }}
+					<br>
+					<strong>Due Date:</strong>
+					{{ eachTask.dueDate ? eachTask.dueDate|date('Y-m-d') : 'N/A' }}
+					<br>
+					<strong>Created At:</strong>
+					{{ eachTask.createdAt ? eachTask.createdAt|date('Y-m-d H:i:s') : 'N/A' }}
+					<br>
+					<form action="{{ path('app_to_do_delete_task', {'taskId': eachTask.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit">Delete</button>
+					</form>
+					{% if not archived %}
+						<form action="{{ path('app_to_do_archive_task', {'taskId': eachTask.id}) }}" method="post">
+							<input type="hidden" name="_method" value="ARCHIVE">
+							<button type="submit">Archive</button>
+						</form>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+
+		<form action="{{ path('app_to_do_add_task')}}" method="get">
+			<button type="submit">Add Task</button>
+		</form>
+
+
+		{% if not archived %}
+
+			<form action="{{ path('app_to_do') }}" method="post">
+				<input type="hidden" id="archived" name="archived" value="1">
+				<button type="submit">Get Archived Tasks</button>
+			</form>
+		{% else %}
+
+			<form action="{{ path('app_to_do') }}" method="post">
+				<button type="submit">Go to Tasks</button>
+			</form>
+		{% endif %}
+
+		<form action="{{ path('app_to_do_logout')}}" method="get">
+			<button type="submit">Logout</button>
+		</form>
+	</body>
+</html>
